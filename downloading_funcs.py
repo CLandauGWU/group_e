@@ -56,11 +56,17 @@ def down_extract_zip(url):
     #Then: flname = down_extract_zip(url_of_zipfile)
     #flname is now the path of the shpfile.
     
-    import os, zipfile, requests
+    import os, zipfile, requests, time
     
     local_filename = str('./data/' + url.split('/')[-1])
         
     r = requests.get(url)
+    
+    while r.status_code != 200:
+        print('Connection error: retrying...')
+        time.sleep(10)
+        r = requests.get(url)
+    
     assert r.status_code == 200 #Check connection
     with open(local_filename, 'wb') as f:
         f.write(r.content)

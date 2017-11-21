@@ -115,3 +115,44 @@ def pointInZone(shp_gdf, raw, zoneLst):
     shp_gdf = shp_gdf.merge(flaginzone,
                         how="left", left_on='NAME', right_index=True)
     return shp_gdf
+
+def oecdGdpQs(shp_gdf, raw, url, i=None):
+    #This extracts U.S. GDP on a quarterly
+    #basis to the correct time unit of analysis
+    
+    import numpy as np
+    import pandas as pd
+    import geopandas as gpd
+    
+    if not 'Q_GDP' in shp_gdf.columns:
+        shp_gdf['Q_GDP'] = 0
+        
+    
+    Qbins = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
+    
+    yr    = round(i)
+    q     = round((i-yr)*100)
+    assert q < 14
+    for ij in range(0, 4):
+        if q in Qbins[ij]:
+            q = 'Q'+ str(ij+1)
+    
+    
+    df = pd.read_csv(url[0], encoding='utf-8')
+    df = df[df.LOCATION == 'USA']
+
+    
+    df[['q', 'yr']]= df.Time.str.split('-', expand=True)
+    
+    df['q'] = df['q'].astype(str)
+    df['yr'] = df['yr'].astype(int)
+    
+    df = df[(df.q == q)]
+    df = df[(df.yr == yr)]
+    i_gdp = list(df['Value'])
+    
+    i_gdp = i_gdp[0]
+    
+    shp_gdf['Q_GDP'][shp_gdf['month']==i] = i_gdp
+    return shp_gdf
+

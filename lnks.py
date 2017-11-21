@@ -1,7 +1,11 @@
 from supp_funcs import zoneConcentration, pointInZone
+from supp_funcs import oecdGdpQs
 
 BBL12_17CSV = ['https://opendata.arcgis.com/datasets/82ab09c9541b4eb8ba4b537e131998ce_22.csv', 'https://opendata.arcgis.com/datasets/4c4d6b4defdf4561b737a594b6f2b0dd_23.csv',   'https://opendata.arcgis.com/datasets/d7aa6d3a3fdc42c4b354b9e90da443b7_1.csv',     'https://opendata.arcgis.com/datasets/a8434614d90e416b80fbdfe2cb2901d8_2.csv', 'https://opendata.arcgis.com/datasets/714d5f8b06914b8596b34b181439e702_36.csv',     'https://opendata.arcgis.com/datasets/c4368a66ce65455595a211d530facc54_3.csv',]
 BBL12_17ZIP = ['https://opendata.arcgis.com/datasets/82ab09c9541b4eb8ba4b537e131998ce_22.zip', 'https://opendata.arcgis.com/datasets/4c4d6b4defdf4561b737a594b6f2b0dd_23.zip', 'https://opendata.arcgis.com/datasets/d7aa6d3a3fdc42c4b354b9e90da443b7_1.zip','https://opendata.arcgis.com/datasets/a8434614d90e416b80fbdfe2cb2901d8_2.zip', 'https://opendata.arcgis.com/datasets/714d5f8b06914b8596b34b181439e702_36.zip', 'https://opendata.arcgis.com/datasets/c4368a66ce65455595a211d530facc54_3.zip']
+
+#Quarterly GDP
+gdpDF = ['https://stats.oecd.org/sdmx-json/data/DP_LIVE/.QGDP.TOT.PC_CHGPP.Q/OECD?contentType=csv&amp;detail=code&amp;separator=comma&amp;csv-lang=en&amp;startPeriod=1980-Q1&amp;endPeriod=2017-Q3']
 
 #Zones and Districts 
 BIZ_Districts = ['https://opendata.arcgis.com/datasets/20ec5862d8f14bcbb9bf14f79c311406_15.csv','https://opendata.arcgis.com/datasets/20ec5862d8f14bcbb9bf14f79c311406_15.zip']
@@ -54,6 +58,9 @@ supplm = [
     [pointInZone, [PHARM, 'PHARM_Concentr']],
     [pointInZone, [GROC, 'GROC_Concentr']],
     [pointInZone, [AFH, 'AFH_Concentr']],
+    #[oecdGdpQs,   gdpDF, 'i=i']
+    
+    
     
       ]
 
