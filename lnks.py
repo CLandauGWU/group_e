@@ -1,5 +1,4 @@
-from supp_funcs import zoneConcentration, pointInZone
-from supp_funcs import oecdGdpQs
+from supp_funcs import *
 
 BBL12_17CSV = ['https://opendata.arcgis.com/datasets/82ab09c9541b4eb8ba4b537e131998ce_22.csv', 'https://opendata.arcgis.com/datasets/4c4d6b4defdf4561b737a594b6f2b0dd_23.csv',   'https://opendata.arcgis.com/datasets/d7aa6d3a3fdc42c4b354b9e90da443b7_1.csv',     'https://opendata.arcgis.com/datasets/a8434614d90e416b80fbdfe2cb2901d8_2.csv', 'https://opendata.arcgis.com/datasets/714d5f8b06914b8596b34b181439e702_36.csv',     'https://opendata.arcgis.com/datasets/c4368a66ce65455595a211d530facc54_3.csv',]
 BBL12_17ZIP = ['https://opendata.arcgis.com/datasets/82ab09c9541b4eb8ba4b537e131998ce_22.zip', 'https://opendata.arcgis.com/datasets/4c4d6b4defdf4561b737a594b6f2b0dd_23.zip', 'https://opendata.arcgis.com/datasets/d7aa6d3a3fdc42c4b354b9e90da443b7_1.zip','https://opendata.arcgis.com/datasets/a8434614d90e416b80fbdfe2cb2901d8_2.zip', 'https://opendata.arcgis.com/datasets/714d5f8b06914b8596b34b181439e702_36.zip', 'https://opendata.arcgis.com/datasets/c4368a66ce65455595a211d530facc54_3.zip']
@@ -46,6 +45,8 @@ BP12_17CSV = ['https://opendata.arcgis.com/datasets/d4891ca6951947538f6707a6b07a
 BP12_17ZIP = [ 'https://opendata.arcgis.com/datasets/4911fcf3527246ae9bf81b5553a48c4d_6.zip','https://opendata.arcgis.com/datasets/d4891ca6951947538f6707a6b07ae225_5.zip', 'https://opendata.arcgis.com/datasets/81a359c031464c53af6230338dbc848e_37.zip', 'https://opendata.arcgis.com/datasets/5f4ea2f25c9a45b29e15e53072126739_7.zip', 'https://opendata.arcgis.com/datasets/9ba1e2cc61144042bdde83b8c68f2580_34.zip', 'https://opendata.arcgis.com/datasets/981c105beef74af38cc4090992661264_25.zip', 'https://opendata.arcgis.com/datasets/5d14ae7dcd1544878c54e61edda489c3_24.zip',]
 PUD = ['https://opendata.arcgis.com/datasets/bdfca0a8c4174bfab5fd1898c8860cc8_9.csv','https://opendata.arcgis.com/datasets/bdfca0a8c4174bfab5fd1898c8860cc8_9.zip',]
 
+#Clim_data filepath
+clim_flpath = ['./data/clim_data.csv']
 
 #Extend this
 supplm = [
@@ -58,8 +59,9 @@ supplm = [
     [pointInZone, [PHARM, 'PHARM_Concentr']],
     [pointInZone, [GROC, 'GROC_Concentr']],
     [pointInZone, [AFH, 'AFH_Concentr']],
-    #[oecdGdpQs,   gdpDF, 'i=i']
-    
+    [oecdGdpQs,   gdpDF, 'i=i'],
+    [metro_prox, None],
+    [clim_ingest, clim_flpath[0], 'i=i'],
     
     
       ]
