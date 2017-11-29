@@ -36,8 +36,6 @@ SRV = ['https://opendata.arcgis.com/datasets/4a84fa926f234916b129cbc022ec4935_29
 COFA = ['https://opendata.arcgis.com/datasets/ec634c5d3ce64a07bad5f74558acafcc_9.csv', 'https://opendata.arcgis.com/datasets/ec634c5d3ce64a07bad5f74558acafcc_9.zip',]
 METRO = ['https://opendata.arcgis.com/datasets/54018b7f06b943f2af278bbe415df1de_52.zip'] 
 
-ftrLst = [LIQUOR, PHARM, GROC, AFH, SCF, FMKT, SVL, BANKS, CLUBS, HOTELS, SRV, COFA, METRO]
-
 #Construction and Financing
 SUPR_TAX = ['https://opendata.arcgis.com/datasets/1c5d4b467eaa4301b976547c65cd7d06_24.csv', 'https://opendata.arcgis.com/datasets/1c5d4b467eaa4301b976547c65cd7d06_24.zip',]
 TIF = ['https://opendata.arcgis.com/datasets/f60a6d54bf2e4e12a779fd0ba3a68e7e_26.csv', 'https://opendata.arcgis.com/datasets/f60a6d54bf2e4e12a779fd0ba3a68e7e_26.zip',]
@@ -48,20 +46,52 @@ PUD = ['https://opendata.arcgis.com/datasets/bdfca0a8c4174bfab5fd1898c8860cc8_9.
 #Clim_data filepath
 clim_flpath = ['./data/clim_data.csv']
 
+#A registry of columns that can be scalar
+scl_cols = ['y', 'countBBL', 'countIssued', 'yr', 'month_abrv',
+           'TAVG', 'TMAX', 'TMIN', 'LIQUOR_Concentr', 'PHARM_Concentr',
+           'GROC_Concentr', 'AFH_Concentr']
+
+ftrLst = [LIQUOR, PHARM, GROC, AFH, SCF, FMKT, SVL, BANKS, CLUBS, HOTELS, SRV, COFA, METRO]
+
+
 #Extend this
 supplm = [
+    
+    [clim_ingest, clim_flpath[0], 'i=i'],
+    [oecdGdpQs,   gdpDF, 'i=i'],
+    
+    
     [zoneConcentration, [BIZ_Districts, 'BIZ_Dist_Concentr']],
     [zoneConcentration, [GS_GRANTS, 'GS_GRANTS_Concentr']],
-    [zoneConcentration, [MS_CORRI, 'MS_CORRI_Concentr']],
-    [zoneConcentration, [GS_CORRI, 'GS_CORRI_Concentr']],
+    #[zoneConcentration, [MS_CORRI, 'MS_CORRI_Concentr']],
+    #[zoneConcentration, [GS_CORRI, 'GS_CORRI_Concentr']],
+    #[zoneConcentration, [HIS_UND,  'HIS_UND_Concentr']],
+    #[zoneConcentration, [DDOT, 'DDOT_Concentr']],
+    #[zoneConcentration, [NINV, 'NINV_Concentr']],
+    #[zoneConcentration, [IRB, 'IRB_Concentr']],
+    #[zoneConcentration, [DE, 'DE_Concentr']],
+    #[zoneConcentration, [ED, 'ED_Concentr']],
+    #[zoneConcentration, [SVZ, 'SVZ_Concentr']],
+    #[zoneConcentration, [DRZ, 'DRZ_Concentr']],
+    #[zoneConcentration, [DTDEV, 'DTDEV_Concentr']],
+    
+    
     
     [pointInZone, [LIQUOR, 'LIQUOR_Concentr']],
     [pointInZone, [PHARM, 'PHARM_Concentr']],
     [pointInZone, [GROC, 'GROC_Concentr']],
-    [pointInZone, [AFH, 'AFH_Concentr']],
-    [oecdGdpQs,   gdpDF, 'i=i'],
+    #[pointInZone, [AFH, 'AFH_Concentr']],
+    #[pointInZone, [SCF, 'SCF_Concentr']],
+    #[pointInZone, [SVL, 'SVL_Concentr']],
+    [pointInZone, [BANKS, 'BANKS_Concentr']],
+    #[pointInZone, [CLUBS, 'CLUBS_Concentr']],
+    #[pointInZone, [HOTELS, 'HOTELS_Concentr']],
+    #[pointInZone, [SRV, 'SRV_Concentr']],
+    #[pointInZone, [COFA, 'COFA_Concentr']],
+    [pointInZone, [METRO, 'METRO_Concentr']],
+    
+    
     [metro_prox, None],
-    [clim_ingest, clim_flpath[0], 'i=i'],
     
     
       ]

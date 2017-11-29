@@ -43,8 +43,7 @@ def addr_shape(shapetype):
         
     
     adr_df  =pd.read_csv(
-        'https://opendata.arcgis.com/datasets/aa514416aaf74fdc94748f1e56e7cc8a_0.csv',
-                     encoding = 'utf-8', low_memory= False)
+      './data/Address_Points.csv', encoding='utf-8', low_memory=False)
 
     return [adr_df, shp_df]
 

@@ -55,7 +55,9 @@ def zoneConcentration(shp_gdf, raw, pntLst, bufr=None):
     pct_ftr_coverage.crs = pointy.crs
     shp_gdf = shp_gdf.merge(pct_ftr_coverage,
                         how="left", left_on='NAME', right_index=True)
+    del pct_ftr_coverage, raw, pointy, denom, numer
     return shp_gdf
+    del shp_gdf
 
 def pointInZone(shp_gdf, raw, zoneLst):
     from downloading_funcs import addr_shape, down_extract_zip
@@ -114,7 +116,9 @@ def pointInZone(shp_gdf, raw, zoneLst):
     flaginzone.crs = pointy.crs
     shp_gdf = shp_gdf.merge(flaginzone,
                         how="left", left_on='NAME', right_index=True)
+    del flaginzone, pointy, inzone, numer, raw
     return shp_gdf
+    del shp_gdf
 
 def oecdGdpQs(shp_gdf, raw, url, i=None):
     #This extracts U.S. GDP on a quarterly
@@ -155,6 +159,7 @@ def oecdGdpQs(shp_gdf, raw, url, i=None):
     
     shp_gdf['Q_GDP'][shp_gdf['month']==i] = i_gdp
     return shp_gdf
+    del shp_gdf
 
 def metro_prox(shp_gdf, raw, bufr=None):
     #Flag properties within distance "bufr" of metro stations
@@ -242,4 +247,5 @@ def clim_ingest(shp_gdf, raw, filepath, i=None):
         shp_gdf[tag][shp_gdf['month']==i] = val
         
     return shp_gdf
+    del shp_gdf
 
