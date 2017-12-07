@@ -80,9 +80,6 @@ def pointInZone(shp_gdf, raw, zoneLst):
     zone = down_extract_zip(zone)
     zone = gpd.read_file(zone, crs=crs)
     
-    #Convenience assignment of projection type
-    crs='EPSG:4326'
-    
     zone['flag'] = 1
     if 'NAME' in zone:
         zone.drop(['NAME'], axis=1, inplace=True)
@@ -249,3 +246,64 @@ def clim_ingest(shp_gdf, raw, filepath, i=None):
     return shp_gdf
     del shp_gdf
 
+def ITSPExtract(shp_gdf, raw, i=None):
+    """Read in tax extract data, pare it down to month i,
+    spatial join on the shape geodataframe shp_gdf. Return shp_gdf.
+    """
+    from downloading_funcs import addr_shape, down_extract_zip
+    import pandas as pd
+    from shapely.geometry import Point, Polygon
+    import geopandas as gpd
+    
+    crs='EPSG:4326'
+    
+    df = pd.read_csv('./data/Integrated_Tax_System_Public_Extract.csv')
+    
+    df.SALEDATE = pd.to_datetime(df.SALEDATE)
+    yr    = round(i)
+    month = round((i-yr)*100)
+    
+    #Narrow it down to just the one row that matches "i"
+    df = df[df.SALEDATE.dt.year  == yr]
+    df = df[df.SALEDATE.dt.month == month]
+    
+    df = df.sort_values(['SALEDATE'])
+    df = df.reset_index(drop=True)
+    
+    #ITSPE has no geospatial data, so we need to merge on addresspoints.
+    adr_df = pd.read_csv('./data/Address_Points.csv')
+    
+    #Regex to clean off the regime codes and any other NaN.
+    adr_df['SSL'] = adr_df['SSL'].str.replace(r'\D+', '')
+    df['SSL'] = df['SSL'].str.replace(r'\D+', '')
+    
+    adr_df = pd.merge(adr_df, df, how='inner', on=['SSL', 'SSL'], suffixes=['', '_tax'])
+    
+    del df
+    
+    adr_df['geometry'] = [
+        Point(xy) for xy in zip(
+            adr_df.LONGITUDE.apply(float), adr_df.LATITUDE.apply(float)
+        )
+    ]
+    
+    adr_df = gpd.GeoDataFrame(adr_df, crs=shp_gdf.crs, geometry=adr_df.geometry)
+    adr_df = adr_df.dropna(subset=['SALEPRICE'])
+    
+    pointy         = gpd.sjoin(shp_gdf, adr_df, 
+                               how='left', op='intersects')
+    
+    pointy = pointy.dropna(subset=['SALEPRICE'])
+    sales  = pointy.groupby('NAME').sum()
+    sales  = sales.SALEPRICE
+    
+    sales.columns = ['realPropertySaleVolume'
+        ]
+    sales = pd.DataFrame(sales)
+    
+    shp_gdf = shp_gdf.merge(sales,
+                        how="left", left_on='NAME', right_index=True)
+    
+    del sales, raw, pointy
+    return shp_gdf
+    del adr_df, shp_gdf

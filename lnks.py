@@ -56,7 +56,7 @@ ftrLst = [LIQUOR, PHARM, GROC, AFH, SCF, FMKT, SVL, BANKS, CLUBS, HOTELS, SRV, C
 
 #Extend this
 supplm = [
-    
+    [ITSPExtract, 'i=i'],
     [clim_ingest, clim_flpath[0], 'i=i'],
     [oecdGdpQs,   gdpDF, 'i=i'],
     
